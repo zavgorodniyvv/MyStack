@@ -10,4 +10,6 @@ public interface MyStack<E> {
     public E peek();
 
     public int search(E element);
+
+    public E getMin();
 }

@@ -2,11 +2,13 @@ package name.zavgorodnii;
 
 import java.lang.reflect.Array;
 import java.util.EmptyStackException;
+import java.util.Stack;
 
 public class MyStackImpl<E> implements MyStack {
     int maxLenght;
     int position = -1;
     private E[] stack;
+    Stack<E> tempStack = new Stack<>();
 
     public MyStackImpl(int maxLenght, Class<E> clazz) {
         this.maxLenght = maxLenght;
@@ -25,6 +27,13 @@ public class MyStackImpl<E> implements MyStack {
     @Override
     public E push(Object element) {
         stack[++position] = (E) element;
+        if(tempStack.empty()){
+            tempStack.push((E) element);
+        }
+        if((Integer)element < (Integer)tempStack.peek()) {
+            tempStack.pop();
+            tempStack.push((E) element);
+        }
         return stack[position] ;
     }
 
@@ -52,5 +61,10 @@ public class MyStackImpl<E> implements MyStack {
             }
         }
         return -1;
+    }
+
+    @Override
+    public Object getMin() {
+        return tempStack.peek();
     }
 }
